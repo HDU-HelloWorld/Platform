@@ -1,0 +1,82 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Output of the go coverage tool
+*.out
+
+# IDE/editor directories and files
+.idea/
+.vscode/
+*.swp
+*~
+
+# Go workspace files
+*.log
+*.db
+*.sqlite
+*.sqlite3
+
+# Dependency directories
+vendor/
+node_modules/
+
+# Go modules
+/go/bin
+/go/pkg
+/go/src
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# Node.js
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Next.js
+.next/
+out/
+build/
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Parcel-bundler cache (used by Next.js)
+.cache/
+
+# Dist folder (used by both Next.js and general Node.js projects)
+dist/
+
+# Coverage directory used by tools like istanbul
+coverage/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# MacOS specific
+.DS_Store
+
+# Windows specific
+Thumbs.db
+
+# koa
+node_modules
+dist
+yarn.lock
+package.json.lock
