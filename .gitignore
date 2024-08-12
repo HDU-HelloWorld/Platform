@@ -80,3 +80,6 @@ node_modules
 dist
 yarn.lock
 package.json.lock
+
+# rush
+temp
