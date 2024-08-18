@@ -1,0 +1,105 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Club {
+  id          Int          @id @default(autoincrement())
+  name        String       @unique
+  description String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime
+  Membership  Membership[]
+}
+
+model Membership {
+  id        Int      @id @default(autoincrement())
+  role      String
+  userId    Int
+  clubId    Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime
+  Club      Club     @relation(fields: [clubId], references: [id])
+  User      User     @relation(fields: [userId], references: [id])
+}
+
+model OAuthAccount {
+  id           Int       @id @default(autoincrement())
+  provider     String
+  providerId   String
+  accessToken  String
+  refreshToken String?
+  expiresAt    DateTime?
+  userId       Int
+  User         User      @relation(fields: [userId], references: [id])
+}
+
+model Permission {
+  id             Int              @id @default(autoincrement())
+  name           String           @unique
+  Role           Role[]
+  RolePermission RolePermission[]
+}
+
+model Profile {
+  id        Int     @id @default(autoincrement())
+  bio       String?
+  avatarUrl String?
+  userId    Int     @unique
+  User      User    @relation(fields: [userId], references: [id])
+}
+
+model Role {
+  id             Int              @id @default(autoincrement())
+  name           String           @unique
+  permissionId   Int?
+  Permission     Permission?      @relation(fields: [permissionId], references: [id])
+  RolePermission RolePermission[]
+  User           User[]
+}
+
+model RolePermission {
+  id           Int        @id @default(autoincrement())
+  roleId       Int
+  permissionId Int
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime
+  Permission   Permission @relation(fields: [permissionId], references: [id])
+  Role         Role       @relation(fields: [roleId], references: [id])
+}
+
+model Session {
+  id           Int      @id @default(autoincrement())
+  sessionToken String   @unique
+  userId       Int
+  expires      DateTime
+  User         User     @relation(fields: [userId], references: [id])
+}
+
+model User {
+  id           Int            @id @default(autoincrement())
+  email        String         @unique
+  username     String         @unique
+  password     String
+  firstName    String
+  lastName     String
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime
+  roleId       Int
+  Membership   Membership[]
+  OAuthAccount OAuthAccount[]
+  Profile      Profile?
+  Session      Session[]
+  Role         Role           @relation(fields: [roleId], references: [id])
+}
+
+model VerificationToken {
+  id         Int      @id @default(autoincrement())
+  identifier String
+  token      String   @unique
+  expires    DateTime
+}
