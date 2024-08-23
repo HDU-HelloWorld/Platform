@@ -1,34 +1,35 @@
 {
 	"name": "node",
 	"version": "1.0.0",
-	"description": "node微服务",
-	"tags": [
-		"orm",
-		"typescript",
-		"koa"
-	],
+	"description": "Node微服务",
+	"main": "index.js",
 	"scripts": {
-		"start": "nodemon",
-		"build": "rm -rf dist && tsc",
-		"pro": "npx pm2 start ecosystem.config.js --env production",
-		"restart": "pm2 restart ecosystem.config.js --env production",
-		"stop": "npx pm2 stop ecosystem.config.js"
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "ts-node ./src/app.ts"
 	},
+	"keywords": [],
+	"author": "Lycoiref",
+	"license": "MIT",
 	"dependencies": {
-		"dotenv": "^8.2.0",
-		"koa": "^2.7.0",
-		"koa-bodyparser": "^4.2.1",
-		"koa-router": "^7.4.0"
+		"@prisma/client": "^5.14.0",
+		"koa": "~2.15.3",
+		"@koa/router": "~13.0.0",
+		"koa-bodyparser": "~4.4.1",
+		"koa-logger": "~3.2.1",
+		"@koa/cors": "~5.0.0",
+		"koa2-swagger-ui": "~5.10.0",
+		"koa-static": "~5.0.0"
 	},
 	"devDependencies": {
-		"@types/koa": "^2.0.48",
-		"@types/koa-bodyparser": "^4.2.2",
-		"@types/koa-router": "^7.0.40",
-		"@types/node": "^12.0.0",
-		"nodemon": "^1.19.0",
-		"pm2": "^3.5.0",
-		"ts-node": "^8.1.0",
-		"tsconfig-paths": "^3.8.0",
-		"typescript": "^3.4.5"
+		"@types/koa__router": "~12.0.4",
+		"@types/node": "^22.4.0",
+		"prisma": "^5.18.0",
+		"ts-node": "^10.9.2",
+		"typescript": "^5.5.4",
+		"@types/koa": "~2.15.0",
+		"@types/koa-bodyparser": "~4.3.12",
+		"@types/koa-logger": "~3.1.5",
+		"@types/koa__cors": "~5.0.0",
+		"@types/koa-static": "~4.0.4"
 	}
 }
