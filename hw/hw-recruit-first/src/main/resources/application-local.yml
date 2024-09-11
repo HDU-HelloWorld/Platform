@@ -1,0 +1,4 @@
+hw:
+  db:
+    host: localhost
+    pw: 112358
