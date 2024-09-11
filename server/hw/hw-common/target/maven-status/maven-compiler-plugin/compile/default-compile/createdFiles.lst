@@ -1,9 +1,0 @@
-com\hw\common\exception\CommonException.class
-com\hw\common\advice\CommonExceptionAdvice.class
-com\hw\common\exception\ForbiddenException.class
-com\hw\common\exception\BadRequestException.class
-com\hw\common\exception\DbException.class
-com\hw\common\exception\UnauthorizedException.class
-com\hw\common\domain\R.class
-com\hw\common\exception\BizIllegalException.class
-com\hw\common\utils\AESUtil.class
