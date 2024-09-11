@@ -15,11 +15,13 @@ enum status {
 export interface recuritTable {
   username: string
   id: number
-  email?: string
-  phone?: string
-  address?: string
-  bio?: string
+  qqId: string
+  phone: string
+  bio: string
   status: status
   school: string
   major: string
+  grade: string
+  createAt: string
+  updateAt: string
 }

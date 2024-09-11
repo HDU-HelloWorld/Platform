@@ -1,11 +1,23 @@
+import { recuritTable } from '@/models/recurit.model'
 import request from '@/utils/request'
+
 const recruitApi = {
   //提交招新申请表单
-  submitRecruitApply: (data: FormData) => {
+  submitRecruitApply: (data: recuritTable) => {
     return request({
       url: '/recruit/apply',
       method: 'post',
-      data,
+      data, //表单数据
+    })
+  },
+  //获取招新申请表单
+  getRecruitApply(id: number) {
+    return request({
+      url: '/recruit/apply',
+      method: 'get',
+      params: {
+        id, //学号
+      },
     })
   },
   //获取招新列表 <>
@@ -13,7 +25,7 @@ const recruitApi = {
     return request({
       url: '/recruit/apply/list',
       method: 'get',
-      data: timeFrame, //时间范围
+      data: timeFrame, //时间范围，返回指定时间段内的招新申请列表
     })
   },
   //修改招新申请表单状态

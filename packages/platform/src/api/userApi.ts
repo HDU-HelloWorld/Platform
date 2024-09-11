@@ -21,5 +21,15 @@ const userApi = {
       method: 'get',
     })
   },
+  //签到
+  signIn(id: number) {
+    return request({
+      url: '/user/signIn',
+      method: 'post',
+      data: {
+        id,
+      },
+    })
+  },
 }
 export default userApi

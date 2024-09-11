@@ -27,7 +27,9 @@ body {
     rgb(var(--background-start-rgb)); */
   background-color: var(--background-hex);
 }
-
+.arco-form-item-symbol {
+  display: inline-block;
+}
 @layer utilities {
   .text-balance {
     text-wrap: balance;
