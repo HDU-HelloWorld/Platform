@@ -1,0 +1,15 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: hw-recruit-first
+  profiles:
+    active: local
+  datasource:
+    url: jdbc:mysql://${hw.db.host}:3306/hw_recruit?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: ${hw.db.pw}
+mybatis-plus:
+  configuration:
+    default-enum-type-handler: com.baomidou.mybatisplus.core.handlers.MybatisEnumTypeHandler
