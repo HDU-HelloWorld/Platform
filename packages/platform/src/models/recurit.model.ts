@@ -1,11 +1,3 @@
-// class RecuritModule {
-//    name:string,
-//    id:internal,
-//    constructor(data){
-//       this.name = data.name
-//       this.id = data.id
-//    }
-// }
 enum status {
   pending = 'pending',
   approved = 'approved',
