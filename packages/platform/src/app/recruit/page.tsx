@@ -5,24 +5,29 @@ import {
   Input,
   Space,
   Button,
+  Message,
   Divider,
   Select,
 } from '@arco-design/web-react'
 import '@arco-design/web-react/dist/css/arco.css'
 import useStores from '@/stores'
 import { recuritTable } from '@/models/recurit.model'
-
+import { College, collegeToMajors } from '@/models/collegeMajor.model'
+import regexList from '@/utils/regex'
 const FormItem = Form.Item
 const Option = Select.Option
 export default function Recruit() {
   const [form] = Form.useForm()
   const { recuritStore } = useStores()
   const departments = ['WEB', '后端', 'AI', '行政']
+
+  const [selectedCollege, setSelectedCollege] = React.useState<College>()
+
   return (
     <>
       <section className="h-full w-full flex flex-col items-center ">
         <h1 className="text-3xl font-bold text-center mt-10">
-          HelloWorld招新报名表
+          HelloWorld 招新报名表
         </h1>
         <Divider />
         <Form
@@ -44,9 +49,22 @@ export default function Recruit() {
               max: `最大值为 #{max}`,
             },
           }}
+          onValuesChange={(value) => {
+            if (value['school']) {
+              setSelectedCollege(value['school'] as College)
+              form.setFieldValue('major', undefined)
+            }
+          }}
           initialValues={{ grade: '2024' }}
           onSubmit={(values: recuritTable) => {
-            recuritStore.submitRecruitApply(values)
+            recuritStore.submitRecruitApply(values).then((res) => {
+              if (res.code === 200) {
+                Message.success('提交成功')
+                form.resetFields()
+              } else {
+                Message.error(res?.msg)
+              }
+            })
           }}>
           <FormItem
             label="姓名"
@@ -69,10 +87,28 @@ export default function Recruit() {
             <Input placeholder="请输入学号" name="id" type="tel" />
           </FormItem>
           <FormItem label="学院" field="school" required>
-            <Input placeholder="请输入学院" name="school" addAfter="学院" />
+            <Select placeholder="选择你的学院">
+              {Object.values(College).map((option, index) => (
+                <Option key={option} value={option}>
+                  {option}
+                </Option>
+              ))}
+            </Select>
           </FormItem>
-          <FormItem label="专业" field="major" required>
-            <Input placeholder="请输入专业全称" name="major" addAfter="专业" />
+          <FormItem
+            label="专业"
+            field="major"
+            required
+            disabled={selectedCollege === undefined}>
+            <Select placeholder="选择你的专业 ">
+              {collegeToMajors[selectedCollege as College]?.map(
+                (option, index) => (
+                  <Option key={option} value={option}>
+                    {option}
+                  </Option>
+                )
+              )}
+            </Select>
           </FormItem>
           <FormItem label="年级" field="grade" required>
             <Input placeholder="请输入入学年份" type="tel" name="grade" />
@@ -80,11 +116,23 @@ export default function Recruit() {
           <FormItem label="QQ号" field="qqId" required>
             <Input type="tel" placeholder="请输入QQ号" />
           </FormItem>
-          <FormItem label="手机号" field="phone" required>
+          <FormItem
+            label="手机号"
+            field="phone"
+            rules={[
+              {
+                required: true,
+                match: regexList.tel,
+                message: '请输入中国大陆手机号（11位）',
+              },
+            ]}>
             <Input type="tel" placeholder="请输入手机号" name="phone" />
           </FormItem>
 
-          <FormItem label="意愿部门" field="department" required>
+          <FormItem
+            label="意愿部门"
+            field="department"
+            rules={[{ required: true, message: '请选择意愿部门' }]}>
             <Select placeholder="意愿部门">
               {departments.map((option, index) => (
                 <Option key={option} value={option}>
@@ -94,10 +142,10 @@ export default function Recruit() {
             </Select>
           </FormItem>
           <FormItem label="个人简介" field="bio">
-            <Input.TextArea placeholder="简单介绍一下你自己吧~" name="bio" />
+            <Input.TextArea placeholder="简单介绍一下自己吧~~" name="bio" />
           </FormItem>
 
-          <Space size={24}>
+          <Space size={24} className="">
             <Button type="primary" htmlType="submit">
               提交
             </Button>

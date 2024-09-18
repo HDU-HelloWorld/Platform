@@ -8,14 +8,9 @@ export default class RecuritStore {
   constructor() {
     makeAutoObservable(this)
   }
-  submitRecruitApply(data: recuritTable) {
-    return new Promise(async (resolve, reject) => {
-      const response = await recruitApi.submitRecruitApply(data).then((res) => {
-        if (res.code === 200) {
-          Message.success('提交成功')
-          resolve(res.data)
-        }
-      })
+  async submitRecruitApply(data: recuritTable) {
+    return recruitApi.submitRecruitApply(data).then((res) => {
+      return res
     })
   }
   // async getRecruitList() {

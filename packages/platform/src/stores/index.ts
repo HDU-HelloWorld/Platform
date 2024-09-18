@@ -5,7 +5,6 @@ const recuritStore = new RecuritStore()
 
 const stores = { recuritStore }
 // 创建上下文
-console.log(stores)
 
 const storesContext = createContext(stores)
 const useStores = () => {

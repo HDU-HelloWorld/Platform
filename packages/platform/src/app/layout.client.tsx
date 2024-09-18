@@ -15,7 +15,7 @@ export default function LayoutProvider({
   return (
     <LayoutContext.Provider value="dark">
       <Header></Header>
-      <Content className="h-dvh max-w-md w-full py-4 flex flex-col  items-center ">
+      <Content className=" max-w-md w-full py-4 flex flex-col  items-center ">
         {children}
       </Content>
       <Footer></Footer>
