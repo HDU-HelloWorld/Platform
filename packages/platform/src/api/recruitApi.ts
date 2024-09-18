@@ -8,7 +8,7 @@ const recruitApi = {
       url: '/recruit/apply',
       method: 'post',
       data, //表单数据
-    })
+    }).then((res) => res.data())
   },
   //获取招新申请表单
   getRecruitApply(id: number) {

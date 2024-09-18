@@ -1,25 +1,18 @@
-import Membership from './membership.model'
-export default class Club {
-  id: number
+// import Membership from './membership.model'
+import type { UserModel } from './user.model'
+import type { MembershipModel } from './membership.model'
+
+interface DepartmentModel {
+  name: 'WEB' | '后端' | 'AI' | '行政'
+  Leaders: MembershipModel[]
+  memberships: MembershipModel[]
+  description: string | ''
+}
+interface ClubModel {
+  departments: DepartmentModel[]
+  Leaders: MembershipModel[]
   name: string
   description?: string | null
-  createdAt: Date
-  updatedAt: Date
-  memberships: Membership[]
-
-  constructor(
-    id: number,
-    name: string,
-    createdAt: Date,
-    updatedAt: Date,
-    memberships: Membership[],
-    description?: string | null
-  ) {
-    this.id = id
-    this.name = name
-    this.description = description
-    this.createdAt = createdAt
-    this.updatedAt = updatedAt
-    this.memberships = memberships
-  }
+  memberships: MembershipModel[]
 }
+export type { ClubModel }
