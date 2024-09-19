@@ -103,3 +103,19 @@ model VerificationToken {
   token      String   @unique
   expires    DateTime
 }
+model registerTable{
+  id Int @id 
+  username String 
+  
+  bio String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  college String
+  major String
+  grade String
+  qqId String
+  phone String
+  status String @default("pending")
+  department String
+  
+}
