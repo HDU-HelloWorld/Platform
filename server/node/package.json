@@ -28,7 +28,7 @@
 		"@types/koa-bodyparser": "~4.3.12",
 		"@types/koa-logger": "~3.1.5",
 		"@types/koa-static": "~4.0.4",
-		"@types/node": "^22.4.0",
+		"@types/node": "^22.5.5",
 		"prisma": "^5.18.0",
 		"ts-node": "^10.9.2",
 		"typescript": "^5.5.4"
