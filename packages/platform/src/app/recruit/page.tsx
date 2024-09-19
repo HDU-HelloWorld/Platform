@@ -50,13 +50,15 @@ export default function Recruit() {
             },
           }}
           onValuesChange={(value) => {
-            if (value['school']) {
-              setSelectedCollege(value['school'] as College)
+            if (value['college']) {
+              setSelectedCollege(value['college'] as College)
               form.setFieldValue('major', undefined)
             }
           }}
           initialValues={{ grade: '2024' }}
           onSubmit={(values: recuritTable) => {
+            console.log(values)
+
             recuritStore.submitRecruitApply(values).then((res) => {
               if (res.code === 200) {
                 Message.success('提交成功')
@@ -86,7 +88,7 @@ export default function Recruit() {
             tooltip={{ content: '请输入8位学号', position: 'top' }}>
             <Input placeholder="请输入学号" name="id" type="tel" />
           </FormItem>
-          <FormItem label="学院" field="school" required>
+          <FormItem label="学院" field="college" required>
             <Select placeholder="选择你的学院">
               {Object.values(College).map((option, index) => (
                 <Option key={option} value={option}>
