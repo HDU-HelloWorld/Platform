@@ -5,8 +5,9 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "start": "next start -p 5566",
+    "lint": "next lint",
+    "pm2start": "pm2 start yarn -n platform -- run start"
   },
   "dependencies": {
     "@arco-design/web-react": "~2.63.3",

@@ -13,15 +13,15 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '20.16.0'
-    # 进入packages/platform中安装依赖
-    - name: Install dependencies
-      run: cd packages/platform && yarn install
-    - name: Build
-      run: cd packages/platform && yarn build
+    # 安装依赖 (没必要)
+    # - name: Set up Node.js
+    #   uses: actions/setup-node@v3
+    #   with:
+    #     node-version: '20.16.0'
+    # - name: Install dependencies
+    #   run: cd packages/platform && yarn
+    # - name: Build
+    #   run: cd packages/platform && yarn build
     - name: Set up SSH
       uses: webfactory/ssh-agent@v0.5.3
       with:
@@ -30,7 +30,11 @@ jobs:
       run: ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }} ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} 'echo "SSH connection successful"'
     - name: Deploy to HelloWord Service
       run: |
-        scp -P ${{ secrets.SSH_PORT }} -r dist/* ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/HelloWorld/Platform
         ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }} ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
-          sudo systemctl reload nginx
+          cd /HelloWorld/Platform
+          git pull
+          cd packages/platform
+          yarn install
+          yarn run build
+          pm2 restart platform || pm2 start yarn -n "platform" --cwd /HelloWorld/Platform/packages/platform -- run start
         EOF
