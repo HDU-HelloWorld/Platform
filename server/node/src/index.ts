@@ -11,7 +11,7 @@ import prisma from './prisma'
 import { DefaultState, Context } from 'koa'
 import './types/index'
 import responseMiddleware from './middleware/responseMiddleware'
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 6677
 const app = new Koa()
 const router = new Router<DefaultState, Context>()
 
