@@ -3,12 +3,12 @@ import request from '@/utils/request'
 
 const recruitApi = {
   //提交招新申请表单
-  submitRecruitApply: (data: recuritTable) => {
+  submitRecruitApply: async (data: recuritTable) => {
     return request({
       url: '/register',
       method: 'post',
       data, //表单数据
-    }).then((res) => res.data())
+    }).then((res) => res.data)
   },
   //获取招新申请表单
   getRecruitApply(id: number) {
@@ -26,7 +26,17 @@ const recruitApi = {
       url: '/register',
       method: 'get',
       data: timeFrame, //时间范围，返回指定时间段内的招新申请列表
-    })
+    }).then((res) => res.data)
+  },
+  modifyRecruitApply: (id: number, updateData: Partial<recuritTable>) => {
+    return request({
+      url: '/register',
+      method: 'put',
+      data: {
+        id,
+        updateData,
+      },
+    }).then((res) => res.data)
   },
   //修改招新申请表单状态
   modifyRecruitApplyStatus: (id: number, status: number) => {

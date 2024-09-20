@@ -8,8 +8,9 @@ import {
   Message,
   Divider,
   Select,
+  InputNumber,
 } from '@arco-design/web-react'
-import '@arco-design/web-react/dist/css/arco.css'
+
 import useStores from '@/stores'
 import { recuritTable } from '@/models/recurit.model'
 import { College, collegeToMajors } from '@/models/collegeMajor.model'
@@ -25,7 +26,7 @@ export default function Recruit() {
 
   return (
     <>
-      <section className="h-full w-full flex flex-col items-center ">
+      <section className="h-full w-full  max-w-md flex flex-col items-center ">
         <h1 className="text-3xl font-bold text-center mt-10">
           HelloWorld 招新报名表
         </h1>
@@ -60,6 +61,8 @@ export default function Recruit() {
             console.log(values)
 
             recuritStore.submitRecruitApply(values).then((res) => {
+              console.log(res)
+
               if (res.code === 200) {
                 Message.success('提交成功')
                 form.resetFields()
@@ -86,7 +89,12 @@ export default function Recruit() {
               },
             ]}
             tooltip={{ content: '请输入8位学号', position: 'top' }}>
-            <Input placeholder="请输入学号" name="id" type="tel" />
+            <InputNumber
+              hideControl
+              placeholder="请输入学号"
+              name="id"
+              type="tel"
+            />
           </FormItem>
           <FormItem label="学院" field="college" required>
             <Select placeholder="选择你的学院">

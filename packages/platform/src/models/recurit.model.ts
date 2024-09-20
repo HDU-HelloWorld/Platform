@@ -1,16 +1,11 @@
-enum status {
-  pending = 'pending',
-  approved = 'approved',
-  rejected = 'rejected',
-}
-
 export interface recuritTable {
-  name: string
+  username: string
   id: number
   qqId: string
   phone: string
   bio: string
-  status: status
+  status: 'pending' | 'approved' | 'rejected'
+  department: 'WEB' | '后端' | 'AI' | '行政'
   college: string
   major: string
   grade: string

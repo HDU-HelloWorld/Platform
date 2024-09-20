@@ -13,13 +13,14 @@ class RegisterService {
       },
     })
     if (exist) {
-      return '该用户已注册'
+      return null
+    } else {
+      return await ctx.prisma.registerTable.create({
+        data: {
+          ...register,
+        },
+      })
     }
-    else {return await ctx.prisma.registerTable.create({
-      data: {
-        ...register,
-      },
-    })}
   }
   getRegisterTable = async (ctx: Context, id?: number) => {
     let res
@@ -35,7 +36,7 @@ class RegisterService {
     return res
   }
   updateRegisterStatus = async (ctx: Context, id: number, status: string) => {
-    await ctx.prisma.registerTable.update({
+    return await ctx.prisma.registerTable.update({
       where: {
         id,
       },
@@ -44,10 +45,32 @@ class RegisterService {
       },
     })
   }
+
+  // updateRegisterTable = async (
+  //   ctx: Context,
+  //   id: number,
+  //   register: registerTable
+  // ) => {}
+
   updateRegisterTable = async (
     ctx: Context,
     id: number,
-    register: registerTable
-  ) => {}
+    updateData: Partial<registerTable>
+  ) => {
+    const exist = await this.getRegisterTable(ctx, id)
+    if (exist) {
+    }
+    try {
+      // 更新记录
+      const updatedRecord = await ctx.prisma.registerTable.update({
+        where: { id },
+        data: updateData,
+      })
+
+      return updatedRecord
+    } catch (error) {
+      return error
+    }
+  }
 }
 export default new RegisterService()

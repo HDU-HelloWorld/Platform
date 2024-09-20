@@ -6,13 +6,27 @@ import { registerTable } from '@prisma/client'
 export const createRegisterTable = async (ctx: Context) => {
   const registerData = ctx.request.body as registerTable
   const table = await registerService.createRegisterTable(ctx, registerData)
-  // const table = await registerService.getRegisterTable(ctx, registerData.id)
-  table ? ctx.success({ data: table }) : ctx.fail({ data: table })
+
+  table
+    ? ctx.success({ data: table })
+    : ctx.fail({ code: -1, msg: '用户已注册', data: table })
 }
 export const getRegisterTableList = async (ctx: Context) => {
-  ctx.body = await registerService.getRegisterTable(ctx)
+  const tableList = await registerService.getRegisterTable(ctx)
+  tableList
+    ? ctx.success({ data: tableList })
+    : ctx.fail({ code: -1, msg: '获取失败', data: tableList })
 }
-export const updateRegisterTable = async (ctx: Context) => {}
+export const updateRegisterTable = async (ctx: Context) => {
+  const { id, updateData } = ctx.request.body as {
+    id: number
+    updateData: Partial<registerTable>
+  }
+  const res = await registerService.updateRegisterTable(ctx, id, updateData)
+  res
+    ? ctx.success({ data: res })
+    : ctx.fail({ code: -1, msg: '更新失败', data: res })
+}
 
 export const updateRegisterStatus = async (ctx: Context) => {
   const { id, status } = ctx.request.body as { id: number; status: string }

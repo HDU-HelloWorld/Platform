@@ -1,5 +1,5 @@
 'use client'
-
+import '@arco-design/web-react/dist/css/arco.css'
 import { createContext } from 'react'
 import { Layout } from '@arco-design/web-react'
 export const LayoutContext = createContext({})
@@ -15,7 +15,7 @@ export default function LayoutProvider({
   return (
     <LayoutContext.Provider value="dark">
       <Header></Header>
-      <Content className=" max-w-md w-full py-4 flex flex-col  items-center ">
+      <Content className="md:max-w-[80%] max-w-md w-full py-4 flex flex-col  items-center ">
         {children}
       </Content>
       <Footer></Footer>
