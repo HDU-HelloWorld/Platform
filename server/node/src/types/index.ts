@@ -1,14 +1,10 @@
 import type { PrismaClient } from '@prisma/client'
-import type { Context } from 'koa'
 
+import { ApiResponse } from './response'
 declare module 'koa' {
-  export interface DefaultState {
-    stateProperty: boolean
-  }
-  export interface Context {
+  interface Context {
     prisma: PrismaClient
-  }
-  export interface DefaultContext {
-    prisma: PrismaClient
+    success: (data: ApiResponse) => void
+    fail: (data: ApiResponse) => void
   }
 }

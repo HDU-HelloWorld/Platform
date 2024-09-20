@@ -7,11 +7,19 @@ import type { Context } from 'koa'
 // }
 class RegisterService {
   createRegisterTable = async (ctx: Context, register: registerTable) => {
-    await ctx.prisma.registerTable.create({
+    const exist = await ctx.prisma.registerTable.findUnique({
+      where: {
+        id: register.id,
+      },
+    })
+    if (exist) {
+      return '该用户已注册'
+    }
+    else {return await ctx.prisma.registerTable.create({
       data: {
         ...register,
       },
-    })
+    })}
   }
   getRegisterTable = async (ctx: Context, id?: number) => {
     let res
