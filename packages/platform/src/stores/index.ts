@@ -1,9 +1,11 @@
 import RecuritStore from './recuritStore'
+
 import { createContext, useContext } from 'react'
+import LuckyWheelStore from './luckyWheel'
 
 const recuritStore = new RecuritStore()
-
-const stores = { recuritStore }
+const luckyStore = new LuckyWheelStore()
+const stores = { recuritStore, luckyStore }
 // 创建上下文
 
 const storesContext = createContext(stores)

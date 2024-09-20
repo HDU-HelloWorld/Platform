@@ -119,3 +119,27 @@ model registerTable{
   department String
   
 }
+model Prize{
+  id Int @id @default(autoincrement())
+  name String
+  weight Int
+  prize String
+  amount Int
+  remain Int 
+  description String?
+  value Int?
+  image String?
+  luckyWheelId Int 
+  luckyWheel LuckyWheel @relation(fields: [luckyWheelId], references: [id])
+}
+model LuckyWheel{
+  id Int @id @default(autoincrement())
+  name String @unique
+
+  prizeList Prize[]
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+
+}

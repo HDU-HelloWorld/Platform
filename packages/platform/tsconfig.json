@@ -34,7 +34,9 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "src/app/luckyWheel/page.tsx",
+    "src/app/luckyWheel/page.tsx"
   ],
   "exclude": [
     "node_modules"

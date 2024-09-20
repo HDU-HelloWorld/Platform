@@ -32,7 +32,13 @@ export const updateRegisterStatus = async (ctx: Context) => {
   const { id, status } = ctx.request.body as { id: number; status: string }
   ctx.body = await registerService.updateRegisterStatus(ctx, id, status)
 }
-
+export const deleteRegisterTable = async (ctx: Context) => {
+  const { id } = ctx.request.body as { id: number }
+  const res = await registerService.deleteRegisterTable(ctx, id)
+  res
+    ? ctx.success({ data: res })
+    : ctx.fail({ code: -1, msg: '删除失败', data: res })
+}
 export const events = async (ctx: Context) => {
   ctx.set('Content-Type', 'text/event-stream')
   ctx.set('Cache-Control', 'no-cache')

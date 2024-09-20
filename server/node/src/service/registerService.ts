@@ -72,5 +72,12 @@ class RegisterService {
       return error
     }
   }
+  deleteRegisterTable = async (ctx: Context, id: number) => {
+    return await ctx.prisma.registerTable.delete({
+      where: {
+        id,
+      },
+    })
+  }
 }
 export default new RegisterService()
