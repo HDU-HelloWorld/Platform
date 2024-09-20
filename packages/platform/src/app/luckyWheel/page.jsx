@@ -4,7 +4,7 @@ import { LuckyWheel } from '@lucky-canvas/react'
 import luckyWheelApi from '../../api/luckyWheel'
 import useStores from '@/stores/index'
 import { observer } from 'mobx-react-lite'
-import { Prize } from '../../models/luckyWheel.model'
+
 const LuckyWheelEg = observer(() => {
   const { luckyStore } = useStores()
   const { luckyWheelData, getLuckyWheelData } = luckyStore
@@ -41,44 +41,46 @@ const LuckyWheelEg = observer(() => {
   const myLucky = useRef()
   return (
     <>
-      {luckyWheelData ? (
-        <div>
-          <LuckyWheel
-            ref={myLucky}
-            width="800px"
-            height="800px"
-            blocks={blocks}
-            prizes={luckyWheelData.prizeList.map(
-              (item: Prize, index: number) => {
-                return {
-                  background: index % 2 === 0 ? '#e9e8fe' : '#b8c5f2',
-                  fonts: [{ text: `${item.name}-${item.prize}`, top: '50%' }],
-                }
-              }
-            )}
-            buttons={buttons}
-            onStart={async () => {
-              // 点击抽奖按钮会触发star回调
-              myLucky.current.play()
-              await luckyWheelApi.drawPrize('2024社团招新抽奖2').then((res) => {
-                console.log(res.data.name)
-                const index = luckyWheelData.prizeList.findIndex(
-                  (item) => item.prize === res.data.prize
-                )
-                myLucky.current.stop(index)
-              })
+      <div>
+        <LuckyWheel
+          ref={myLucky}
+          width="800px"
+          height="800px"
+          blocks={blocks}
+          prizes={luckyWheelData.prizeList.map((item, index) => {
+            return {
+              background: index % 2 === 0 ? '#e9e8fe' : '#b8c5f2',
+              fonts: [
+                {
+                  text: `${item.name}-${item.prize}`,
+                  top: '50%',
+                  fontSize: '32px',
+                },
+              ],
+            }
+          })}
+          buttons={buttons}
+          onStart={async () => {
+            // 点击抽奖按钮会触发star回调
+            myLucky.current.play()
+            await luckyWheelApi.drawPrize('2024社团招新抽奖2').then((res) => {
+              console.log(res.data.name)
+              const index = luckyWheelData.prizeList.findIndex(
+                (item) => item.prize === res.data.prize
+              )
+              myLucky.current.stop(index)
+            })
 
-              // setTimeout(() => {
-              //   const index = (Math.random() * 6) >> 0
-              // }, 2500)
-            }}
-            onEnd={(prize) => {
-              // 抽奖结束会触发end回调
-              alert(`恭喜你获得${prize.fonts[0].text}`)
-            }}
-          />
-        </div>
-      ) : null}
+            // setTimeout(() => {
+            //   const index = (Math.random() * 6) >> 0
+            // }, 2500)
+          }}
+          onEnd={(prize) => {
+            // 抽奖结束会触发end回调
+            alert(`恭喜你获得${prize.fonts[0].text}`)
+          }}
+        />
+      </div>
     </>
   )
 })
