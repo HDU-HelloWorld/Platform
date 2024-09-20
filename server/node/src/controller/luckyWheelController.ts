@@ -5,6 +5,7 @@ export const createLuckyWheel = async (ctx: Context) => {
   const { luckyWheel } = ctx.request.body as {
     luckyWheel: LuckyWheelWithPrizeList
   }
+
   const res = await luckyWheelService.createLuckyWheel(ctx, luckyWheel)
   res ? ctx.success({ data: res }) : ctx.fail({ code: 500, msg: '创建失败' })
 }
@@ -17,4 +18,20 @@ export const drawPrize = async (ctx: Context) => {
   const { name } = ctx.request.body as { name: string }
   const res = await luckyWheelService.drawPrize(ctx, name)
   res ? ctx.success({ data: res }) : ctx.fail({ code: 500, msg: '抽奖失败' })
+}
+export const updateLuckyWheel = async (ctx: Context) => {
+  const { luckyWheel } = ctx.request.body as {
+    luckyWheel: LuckyWheelWithPrizeList
+  }
+  const res = await luckyWheelService.updateLuckyWheel(
+    ctx,
+    luckyWheel.name,
+    luckyWheel
+  )
+  res ? ctx.success({ data: res }) : ctx.fail({ code: 500, msg: '更新失败' })
+}
+export const deleteLuckyWheel = async (ctx: Context) => {
+  const { name } = ctx.request.body as { name: string }
+  const res = await luckyWheelService.deleteLuckyWheel(ctx, name)
+  res ? ctx.success({ data: res }) : ctx.fail({ code: 500, msg: '删除失败' })
 }

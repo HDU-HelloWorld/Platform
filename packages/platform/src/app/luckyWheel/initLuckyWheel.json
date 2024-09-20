@@ -1,41 +1,54 @@
 {
   "luckyWheel": {
-    "name": "2024社团招新抽奖6",
+    "name": "2024社团招新抽奖",
     "prizeList": [
       {
         "name": "一等奖",
         "weight": 1,
         "prize": "键盘",
         "remain": 1,
-        "amount": 1
+        "amount": 1,
+        "image": "/键盘.jpg"
       },
       {
         "name": "一等奖",
         "weight": 1,
         "prize": "手柄",
         "remain": 0,
-        "amount": 1
+        "amount": 1,
+        "image": "/手柄.jpg"
       },
       {
         "name": "二等奖",
         "weight": 2,
-        "prize": "定制抱枕",
-        "remain": 6,
-        "amount": 6
+        "prize": "定制抱枕1",
+        "remain": 2,
+        "amount": 2,
+        "image": "/抱枕1.jpg"
+      },
+      {
+        "name": "二等奖",
+        "weight": 2,
+        "prize": "定制抱枕2",
+        "remain": 2,
+        "amount": 2,
+        "image": "/抱枕2.jpg"
       },
       {
         "name": "三等奖",
         "weight": 3,
         "prize": "CCF笔记本",
         "remain": 10,
-        "amount": 10
+        "amount": 10,
+        "image": "/笔记本.jpg"
       },
       {
         "name": "参与奖",
         "weight": 10,
         "prize": "小零食",
         "remain": 100,
-        "amount": 100
+        "amount": 100,
+        "image": "/小零食.jpg"
       }
     ]
   }
