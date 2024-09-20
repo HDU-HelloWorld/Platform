@@ -2,7 +2,10 @@
 const nextConfig = {
   env: {
     
-  }
+  },
+  devServer: {
+    port: 3000,
+  },
   // 启动端口
 }
 
