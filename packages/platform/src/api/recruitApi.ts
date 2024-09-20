@@ -50,5 +50,14 @@ const recruitApi = {
       },
     })
   },
+  deleteRecruitApply: (id: number) => {
+    return request({
+      url: '/register',
+      method: 'delete',
+      data: {
+        id,
+      },
+    }).then((res) => res.data)
+  },
 }
 export default recruitApi

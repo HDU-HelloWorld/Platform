@@ -10,6 +10,7 @@ import {
   Form,
   FormInstance,
   Tag,
+  Message,
 } from '@arco-design/web-react'
 import { recuritTable } from '@/models/recurit.model'
 import { useEffect } from 'react'
@@ -97,8 +98,13 @@ import { useEffect } from 'react'
 
 const RecuritList = observer(() => {
   const { recuritStore } = useStores()
-  const { recruitList, loading, getRecruitList, updateRecruitApply } =
-    recuritStore
+  const {
+    recruitList,
+    loading,
+    getRecruitList,
+    updateRecruitApply,
+    deleteRecruitApply,
+  } = recuritStore
   useEffect(() => {
     getRecruitList()
   }, [])
@@ -150,7 +156,7 @@ const RecuritList = observer(() => {
             className=""
             defaultValue={record.status}
             onChange={async (_) => {
-              await recuritStore.updateRecruitApply(record.id, {
+              await updateRecruitApply(record.id, {
                 status: _,
               })
             }}>
@@ -188,9 +194,20 @@ const RecuritList = observer(() => {
   //   setData(newData)
   // }
 
-  function removeRow(key: any) {}
+  async function removeRow(key: any) {
+    console.log(key)
+    recruitList.find((item) => {
+      if (item.id + item.username === key) {
+        deleteRecruitApply(item.id).then((res) => {
+          Message.success('删除成功')
+        })
+      }
+    })
+  }
 
-  function addRow() {}
+  function addRow() {
+    window.location.href = '/recruit'
+  }
 
   return (
     <section className="w-full">

@@ -16,8 +16,6 @@ export default class RecuritStore {
   async getRecruitList() {
     const res = await recruitApi.getRecruitList(['', ''])
     runInAction(() => {
-     
-
       this.recruitList = res.data
       this.loading = false
     })
@@ -25,6 +23,11 @@ export default class RecuritStore {
   }
   async updateRecruitApply(id: number, updateData: Partial<recuritTable>) {
     const res = await recruitApi.modifyRecruitApply(id, updateData)
+    return res
+  }
+  async deleteRecruitApply(id: number) {
+    const res = await recruitApi.deleteRecruitApply(id)
+    await this.getRecruitList()
     return res
   }
 }
