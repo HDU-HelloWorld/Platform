@@ -37,4 +37,7 @@ jobs:
           yarn install
           yarn run build
           pm2 restart platform || pm2 start yarn -n "platform" --cwd /HelloWorld/Platform/packages/platform -- run start
+          cd /HelloWorld/Platform/server/node
+          yarn
+          pm2 restart platform-server || pm2 start yarn -n "platform-server" --cwd /HelloWorld/Platform/server/node -- run start 
         EOF
