@@ -43,24 +43,25 @@ const LuckyWheelEg = observer(() => {
       <div>
         <LuckyWheel
           ref={myLucky}
-          width="700px"
-          height="700px"
+          width="50vw"
+          height="50vw"
           blocks={blocks}
           prizes={luckyWheelData.prizeList.map((item, index) => {
             return {
               background: index % 2 === 0 ? '#e9e8fe' : '#b8c5f2',
+
               fonts: [
                 {
                   text: `${item.name}-${item.prize}`,
                   top: '70%',
-                  fontSize: '28px',
+                  fontSize: '1rem',
                 },
               ],
               imgs: [
                 {
                   src: item.image,
-                  width: '100px',
-                  height: '100px',
+                  width: '7vw',
+                  height: '7vw',
                   top: '10%',
                 },
               ],
