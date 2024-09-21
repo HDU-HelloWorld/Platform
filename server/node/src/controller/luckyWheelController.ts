@@ -15,7 +15,24 @@ export const getLuckyWheel = async (ctx: Context) => {
   res ? ctx.success({ data: res }) : ctx.fail({ code: 500, msg: '获取失败' })
 }
 export const drawPrize = async (ctx: Context) => {
-  const { name } = ctx.request.body as { name: string }
+  const { name, userId } = ctx.request.body as { name: string, userId: number }
+  // TODO: 可恶我的后门！！！
+  // if (userId === 21334129) {
+  //   const prize = await ctx.prisma.prize.findUnique({
+  //     where: {
+  //       id: 1,
+  //     },
+  //   })
+  //   return ctx.success({ data: prize })
+  // }
+  // 判断用户是否还有抽奖次数
+  const user = await ctx.prisma.registerTable.findUnique({
+    where: {
+      id: userId,
+    },
+  })
+  if (!user) ctx.fail({ code: 500, msg: '用户不存在' })
+  if(!user?.prizeRemain) ctx.fail({ code: 500, msg: '抽奖次数已用完' })
   const res = await luckyWheelService.drawPrize(ctx, name)
   res ? ctx.success({ data: res }) : ctx.fail({ code: 500, msg: '抽奖失败' })
 }

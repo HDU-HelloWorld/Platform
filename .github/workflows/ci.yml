@@ -31,9 +31,6 @@ jobs:
       - name: Deploy to HelloWord Service
         run: |
           ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }} ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
-          cd /HelloWorld/Platform/server/node
-            npx prisma db pull
-            npx prisma generate
           cd /HelloWorld/Platform
             git pull
             cd packages/platform
@@ -41,6 +38,8 @@ jobs:
             yarn run build
             pm2 restart platform || pm2 start yarn -n "platform" --cwd /HelloWorld/Platform/packages/platform -- run start
             cd /HelloWorld/Platform/server/node
+            npx prisma generate
+            npx prisma db pull
             yarn
             pm2 restart platform-server || pm2 start yarn -n "platform-server" --cwd /HelloWorld/Platform/server/node -- run start 
           EOF

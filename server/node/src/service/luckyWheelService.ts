@@ -1,5 +1,5 @@
 import type { Context } from 'koa'
-import type { LuckyWheel, Prize } from '@prisma/client'
+import type { LuckyWheel } from '@prisma/client'
 import { LuckyWheelWithPrizeList } from '../types/index'
 class LuckyWheelService {
   async createLuckyWheel(ctx: Context, luckyWheel: LuckyWheelWithPrizeList) {
