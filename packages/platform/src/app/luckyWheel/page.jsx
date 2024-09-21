@@ -10,7 +10,6 @@ const LuckyWheelEg = observer(() => {
   const { luckyWheelData, getLuckyWheelData } = luckyStore
   useEffect(() => {
     // console.log(luckyWheelData.luckyWheel.prizeList)
-
     getLuckyWheelData().then((res) => console.log(res))
   }, [])
   const [blocks] = useState([{ padding: '10px', background: '#869cfa' }])
@@ -44,8 +43,8 @@ const LuckyWheelEg = observer(() => {
       <div>
         <LuckyWheel
           ref={myLucky}
-          width="800px"
-          height="800px"
+          width="700px"
+          height="700px"
           blocks={blocks}
           prizes={luckyWheelData.prizeList.map((item, index) => {
             return {
@@ -53,8 +52,16 @@ const LuckyWheelEg = observer(() => {
               fonts: [
                 {
                   text: `${item.name}-${item.prize}`,
-                  top: '50%',
-                  fontSize: '32px',
+                  top: '70%',
+                  fontSize: '28px',
+                },
+              ],
+              imgs: [
+                {
+                  src: item.image,
+                  width: '100px',
+                  height: '100px',
+                  top: '10%',
                 },
               ],
             }

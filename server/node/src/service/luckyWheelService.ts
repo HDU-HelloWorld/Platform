@@ -61,6 +61,38 @@ class LuckyWheelService {
       return null
     }
   }
+  async deleteLuckyWheel(ctx: Context, name: string) {
+    const existWheel = await ctx.prisma.luckyWheel.findUnique({
+      where: { name },
+      include: { prizeList: true },
+    })
+
+    if (!existWheel) {
+      return null
+    }
+
+    try {
+      // 开始事务
+      await ctx.prisma.$transaction(async (tx) => {
+        // 删除所有关联的 Prize 记录
+        await Promise.all(
+          existWheel.prizeList.map((prize) =>
+            ctx.prisma.prize.delete({ where: { id: prize.id } })
+          )
+        )
+
+        // 删除 LuckyWheel 记录
+        await ctx.prisma.luckyWheel.delete({ where: { name } })
+      })
+
+      return {
+        message: 'LuckyWheel and its prizes have been deleted successfully.',
+      }
+    } catch (error) {
+      console.error('Error deleting LuckyWheel and prizes:', error)
+      throw error
+    }
+  }
   async drawPrize(ctx: Context, name: string) {
     //抽奖
 
