@@ -7,7 +7,7 @@ import { observer } from 'mobx-react-lite'
 
 const LuckyWheelEg = observer(() => {
   const { luckyStore } = useStores()
-  const { luckyWheelData, getLuckyWheelData } = luckyStore
+  const { luckyWheelData, getLuckyWheelData, resetLuckyWheel } = luckyStore
   useEffect(() => {
     // console.log(luckyWheelData.luckyWheel.prizeList)
     getLuckyWheelData().then((res) => console.log(res))
@@ -54,7 +54,7 @@ const LuckyWheelEg = observer(() => {
                 {
                   text: `${item.name}-${item.prize}`,
                   top: '70%',
-                  fontSize: '1rem',
+                  fontSize: '1.5vw',
                 },
               ],
               imgs: [
@@ -71,7 +71,7 @@ const LuckyWheelEg = observer(() => {
           onStart={async () => {
             // 点击抽奖按钮会触发star回调
             myLucky.current.play()
-            await luckyWheelApi.drawPrize('2024社团招新抽奖2').then((res) => {
+            await luckyWheelApi.drawPrize(luckyWheelData.name).then((res) => {
               console.log(res.data.name)
               const index = luckyWheelData.prizeList.findIndex(
                 (item) => item.prize === res.data.prize
