@@ -17,4 +17,9 @@ export default class LuckyWheelStore {
     })
     return res
   }
+  async resetLuckyWheel(name: string) {
+    await luckyWheelApi.deleteLuckyWheel(name)
+    await luckyWheelApi.createLuckyWheel(this.luckyWheelData)
+    await this.getLuckyWheelData()
+  }
 }
