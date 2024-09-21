@@ -4,7 +4,7 @@ const luckyWheelApi = {
   createLuckyWheel: async (luckyWheel: LuckyWheel) => {
     return request
       .post('/luckyWheel', {
-        luckyWheel,
+        luckyWheel
       })
       .then((res) => res.data)
   },
@@ -19,13 +19,14 @@ const luckyWheelApi = {
       .delete('/luckyWheel', { data: { name } })
       .then((res) => res.data)
   },
-  drawPrize: async (name: string) => {
+  drawPrize: async (name: string, userId: number) => {
     //传入轮盘名称
     return request
       .put('/luckyWheel', {
         name,
+        userId
       })
       .then((res) => res.data)
-  },
+  }
 }
 export default luckyWheelApi

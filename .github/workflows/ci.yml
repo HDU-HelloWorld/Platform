@@ -32,6 +32,7 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }} ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
           cd /HelloWorld/Platform
+            git reset --hard
             git pull
             cd packages/platform
             yarn install
