@@ -1,5 +1,5 @@
 'use client'
-
+import { useState } from 'react'
 import { observer } from 'mobx-react-lite'
 import useStores from '@/stores/index'
 import {
@@ -8,13 +8,14 @@ import {
   Input,
   Select,
   Form,
+  Modal,
   FormInstance,
   Tag,
-  Message,
+  Message
 } from '@arco-design/web-react'
 import { recuritTable } from '@/models/recurit.model'
 import { useEffect } from 'react'
-
+import { IconDown, IconRight } from '@arco-design/web-react/icon'
 // function EditableCell(props: any) {
 //   const { children, className, rowData, column, onHandleSave } = props
 //   const ref = useRef(null)
@@ -98,12 +99,14 @@ import { useEffect } from 'react'
 
 const RecuritList = observer(() => {
   const { recuritStore } = useStores()
+
+  const [deleteRow, setDeleteRow] = useState<recuritTable>()
   const {
     recruitList,
     loading,
     getRecruitList,
     updateRecruitApply,
-    deleteRecruitApply,
+    deleteRecruitApply
   } = recuritStore
   useEffect(() => {
     getRecruitList()
@@ -112,11 +115,11 @@ const RecuritList = observer(() => {
   const columns = [
     {
       title: 'Name',
-      dataIndex: 'username',
+      dataIndex: 'username'
     },
     {
       title: 'Id',
-      dataIndex: 'id',
+      dataIndex: 'id'
     },
     {
       title: '意愿部门',
@@ -125,7 +128,7 @@ const RecuritList = observer(() => {
       filters: ['WEB', '后端', 'AI', '行政'].map((item) => {
         return {
           text: item,
-          value: item,
+          value: item
         }
       }),
       onFilter: (value: string, row: recuritTable) => {
@@ -140,14 +143,15 @@ const RecuritList = observer(() => {
             onChange={async (_) => {
               console.log(
                 await recuritStore.updateRecruitApply(record.id, {
-                  department: _,
+                  department: _
                 })
               )
             }}
             defaultValue={record.department}
-            options={['WEB', '后端', 'AI', '行政']}></Select>
+            options={['WEB', '后端', 'AI', '行政']}
+          ></Select>
         )
-      },
+      }
     },
     {
       title: '审核状态',
@@ -163,26 +167,40 @@ const RecuritList = observer(() => {
           }
         }
         return (
-          <Select
-            className=""
-            defaultValue={record.status}
-            onChange={async (_) => {
-              await updateRecruitApply(record.id, {
-                status: _,
-              })
-            }}>
-            <Select.Option value="pending">
-              <Tag color="blue">pending</Tag>
-            </Select.Option>
-            <Select.Option value="rejected">
-              <Tag color="red">rejected</Tag>
-            </Select.Option>
-            <Select.Option value="approved">
-              <Tag color="green">approved</Tag>
-            </Select.Option>
-          </Select>
+          <>
+            <Select
+              className=""
+              defaultValue={record.status}
+              onChange={async (_) => {
+                await updateRecruitApply(record.id, {
+                  status: _
+                })
+              }}
+            >
+              <Select.Option value="pending">
+                <Tag color="blue">pending</Tag>
+              </Select.Option>
+              <Select.Option value="rejected">
+                <Tag color="red">rejected</Tag>
+              </Select.Option>
+              <Select.Option value="approved">
+                <Tag color="green">approved</Tag>
+              </Select.Option>
+            </Select>
+          </>
         )
       },
+      filters: ['pending', 'rejected', 'approved'].map((item) => {
+        return {
+          text: item,
+          value: item
+        }
+      }),
+      onFilter: (value: string, row: recuritTable) => {
+        // console.log(value, row)
+        return row.status === value
+      },
+      filterMultiple: false
     },
     {
       title: 'Operation',
@@ -191,65 +209,124 @@ const RecuritList = observer(() => {
         <Button
           onClick={() => removeRow(record.key)}
           type="primary"
-          status="danger">
+          status="danger"
+        >
           Delete
         </Button>
-      ),
-    },
+      )
+    }
   ]
 
-  // function handleSave(row) {
-  //   const newData = [...data]
-  //   const index = newData.findIndex((item) => row.key === item.key)
-  //   newData.splice(index, 1, { ...newData[index], ...row })
-  //   setData(newData)
-  // }
-
   async function removeRow(key: any) {
-    console.log(key)
-    recruitList.find((item) => {
-      if (item.id + item.username === key) {
-        deleteRecruitApply(item.id).then((res) => {
-          Message.success('删除成功')
-        })
-      }
-    })
+    setDeleteRow(
+      recruitList.find((item) => {
+        if (item.id + item.username === key) {
+          return item
+        }
+      })
+    )
   }
-
   function addRow() {
     window.location.href = '/recruit'
   }
 
   return (
-    <section className="w-full">
-      <Button style={{ marginBottom: 10 }} type="primary" onClick={addRow}>
-        Add
-      </Button>
-      <Table
-        stripe
-        data={recruitList.map((item) => {
-          return { ...item, key: item.id + item.username }
-        })}
-        loading={loading}
-        components={{
-          body: {
-            // row: EditableRow,
-            // cell: EditableCell,
-          },
+    <>
+      {' '}
+      <section className="w-full">
+        <Button style={{ marginBottom: 10 }} type="primary" onClick={addRow}>
+          Add
+        </Button>
+        <Table
+          stripe
+          data={recruitList.map((item) => {
+            return { ...item, key: item.id + item.username }
+          })}
+          loading={loading}
+          components={{
+            body: {
+              // row: EditableRow,
+              // cell: EditableCell,
+            }
+          }}
+          columns={columns.map((column) =>
+            column.editable
+              ? {
+                  ...column,
+                  onCell: () => ({
+                    // onHandleSave: handleSave,
+                  })
+                }
+              : column
+          )}
+          className="table-demo-editable-cell"
+          expandedRowRender={(record) => {
+            return (
+              <>
+                <p>
+                  <strong>申请人：</strong>
+                  <span className="text-green-600">{record.username}</span>
+                </p>
+                <p>
+                  <strong>学院-专业：</strong>
+                  <span className="text-gray-500">
+                    {record.college} - {record.major}
+                  </span>
+                </p>
+                <p>
+                  <strong>入学年份：</strong>
+                  <span className="text-red-400">{record.grade}</span>
+                </p>
+                <p>
+                  <strong>申请部门：</strong>
+                  <span className="text-blue-600"> {record.department}</span>
+                </p>
+                <p>
+                  <strong>申请理由：</strong>
+                  {record.bio}
+                </p>
+                {/* <p>
+                  <strong>QQ：</strong>
+                  <span className="text-green-600">{record.qqId}</span>
+                </p> */}
+              </>
+            )
+          }}
+          expandProps={{
+            icon: ({ expanded, record, ...restProps }) =>
+              expanded ? (
+                <button {...restProps}>
+                  <IconDown />
+                </button>
+              ) : (
+                <button {...restProps}>
+                  <IconRight />
+                </button>
+              ),
+            width: 60,
+            columnTitle: 'Expand',
+            rowExpandable: (record) => record.key !== '4'
+          }}
+        />
+      </section>
+      <Modal
+        title="Modal Title"
+        visible={deleteRow !== undefined}
+        onOk={async () => {
+          await deleteRecruitApply(deleteRow?.id as number).then((res) => {
+            Message.success('删除成功')
+          })
         }}
-        columns={columns.map((column) =>
-          column.editable
-            ? {
-                ...column,
-                onCell: () => ({
-                  // onHandleSave: handleSave,
-                }),
-              }
-            : column
-        )}
-        className="table-demo-editable-cell"
-      />
-    </section>
+        onCancel={() => {
+          setDeleteRow(undefined)
+          Message.warning('取消删除')
+        }}
+        autoFocus={false}
+        focusLock={true}
+      >
+        <p>{` 确定要删除${deleteRow?.username}的申请吗？`}</p>
+      </Modal>
+    </>
   )
 })
 export default RecuritList
