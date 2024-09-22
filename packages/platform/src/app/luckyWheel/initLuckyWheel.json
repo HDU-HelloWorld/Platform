@@ -44,10 +44,10 @@
       },
       {
         "name": "参与奖",
-        "weight": 10,
+        "weight": 7,
         "prize": "小零食",
-        "remain": 100,
-        "amount": 100,
+        "remain": 500,
+        "amount": 500,
         "image": "/小零食.jpg"
       }
     ]
