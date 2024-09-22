@@ -2,42 +2,45 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     # 执行步骤
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    # 安装依赖 (没必要)
-    # - name: Set up Node.js
-    #   uses: actions/setup-node@v3
-    #   with:
-    #     node-version: '20.16.0'
-    # - name: Install dependencies
-    #   run: cd packages/platform && yarn
-    # - name: Build
-    #   run: cd packages/platform && yarn build
-    - name: Set up SSH
-      uses: webfactory/ssh-agent@v0.5.3
-      with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-    - name: Test SSH connection
-      run: ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }} ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} 'echo "SSH connection successful"'
-    - name: Deploy to HelloWord Service
-      run: |
-        ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }} ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
+      - name: Checkout code
+        uses: actions/checkout@v2
+      # 安装依赖 (没必要)
+      # - name: Set up Node.js
+      #   uses: actions/setup-node@v3
+      #   with:
+      #     node-version: '20.16.0'
+      # - name: Install dependencies
+      #   run: cd packages/platform && yarn
+      # - name: Build
+      #   run: cd packages/platform && yarn build
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Test SSH connection
+        run: ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }} ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} 'echo "SSH connection successful"'
+      - name: Deploy to HelloWord Service
+        run: |
+          ssh -o StrictHostKeyChecking=no -p ${{ secrets.SSH_PORT }} ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} << 'EOF'
           cd /HelloWorld/Platform
-          git pull
-          cd packages/platform
-          yarn install
-          yarn run build
-          pm2 restart platform || pm2 start yarn -n "platform" --cwd /HelloWorld/Platform/packages/platform -- run start
-          cd /HelloWorld/Platform/server/node
-          yarn
-          pm2 restart platform-server || pm2 start yarn -n "platform-server" --cwd /HelloWorld/Platform/server/node -- run start 
-        EOF
+            git reset --hard
+            git pull
+            cd packages/platform
+            yarn install
+            yarn run build
+            pm2 restart platform || pm2 start yarn -n "platform" --cwd /HelloWorld/Platform/packages/platform -- run start
+            cd /HelloWorld/Platform/server/node
+            npx prisma generate
+            npx prisma db pull
+            yarn
+            pm2 restart platform-server || pm2 start yarn -n "platform-server" --cwd /HelloWorld/Platform/server/node -- run start 
+          EOF

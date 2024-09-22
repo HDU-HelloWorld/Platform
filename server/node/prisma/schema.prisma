@@ -103,43 +103,41 @@ model VerificationToken {
   token      String   @unique
   expires    DateTime
 }
-model registerTable{
-  id Int @id 
-  username String 
-  
-  bio String?
+
+model registerTable {
+  id          Int      @id
+  username    String
+  qqId        String
+  bio         String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  college     String
+  major       String
+  grade       String
+  status      String   @default("pending")
+  department  String
+  phone       String
+  prizeRemain Int?     @default(2)
+}
+
+model Prize {
+  id           Int        @id @default(autoincrement())
+  weight       Int
+  prize        String
+  amount       Int
+  remain       Int
+  description  String?
+  value        Int?
+  image        String?
+  luckyWheelId Int
+  name         String
+  luckyWheel   LuckyWheel @relation(fields: [luckyWheelId], references: [id])
+}
+
+model LuckyWheel {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  college String
-  major String
-  grade String
-  qqId String
-  phone String
-  status String @default("pending")
-  department String
-  
-}
-model Prize{
-  id Int @id @default(autoincrement())
-  name String
-  weight Int
-  prize String
-  amount Int
-  remain Int 
-  description String?
-  value Int?
-  image String?
-  luckyWheelId Int 
-  luckyWheel LuckyWheel @relation(fields: [luckyWheelId], references: [id])
-}
-model LuckyWheel{
-  id Int @id @default(autoincrement())
-  name String @unique
-
   prizeList Prize[]
-  
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  
-
 }
