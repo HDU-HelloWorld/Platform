@@ -122,6 +122,17 @@ const RecuritList = observer(() => {
       title: '意愿部门',
       dataIndex: 'department',
       editable: true,
+      filters: ['WEB', '后端', 'AI', '行政'].map((item) => {
+        return {
+          text: item,
+          value: item,
+        }
+      }),
+      onFilter: (value: string, row: recuritTable) => {
+        // console.log(value, row)
+        return row.department === value
+      },
+      filterMultiple: false,
       render: (_: any, record: recuritTable) => {
         return (
           <Select
