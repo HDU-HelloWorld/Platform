@@ -1,6 +1,7 @@
 // 学院枚举
 enum College {
   MechanicalEngineering = '机械工程学院',
+
   Management = '管理学院',
   ElectronicsInformation = '电子信息学院（微电子学院）',
   ComputerScience = '计算机学院（软件学院）',
@@ -14,6 +15,7 @@ enum College {
   Cybersecurity = '网络空间安全学院（浙江保密学院）',
   HumanitiesArtAndDigitalMedia = '人文艺术与数字媒体学院',
   Law = '法学院',
+  ShengGuangJiLianHe = '圣光机联合学院',
 }
 
 // 专业枚举
@@ -64,6 +66,8 @@ enum Major {
   Jurisprudence = '法学',
   Sociology = '社会学',
   ChineseInternationalEducation = '汉语国际教育',
+  SGJ_ComputerScienceAndTechnology = '计算机科学与技术(圣光机联合)',
+  SGJ_Automation = '自动化(圣光机联合)',
 }
 
 // 专业对学院的映射
@@ -122,12 +126,18 @@ const majorToCollege: MajorToCollege = {
   [Major.Jurisprudence]: College.Law,
   [Major.Sociology]: College.Law,
   [Major.ChineseInternationalEducation]: College.Law,
+  [Major.SGJ_ComputerScienceAndTechnology]: College.ShengGuangJiLianHe,
+  [Major.SGJ_Automation]: College.ShengGuangJiLianHe,
 }
 type CollegeToMajors = {
   [key in College]: Major[]
 }
 //学院对专业的映射表
 const collegeToMajors: CollegeToMajors = {
+  [College.ShengGuangJiLianHe]: [
+    Major.SGJ_ComputerScienceAndTechnology,
+    Major.SGJ_Automation,
+  ],
   [College.MechanicalEngineering]: [
     Major.MechanicalDesignManufacturingAutomation,
     Major.VehicleEngineering,
