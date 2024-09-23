@@ -5,12 +5,14 @@ import logger from 'koa-logger'
 import cors from '@koa/cors'
 import { koaSwagger } from 'koa2-swagger-ui'
 import path from 'path'
+
 import serve from 'koa-static'
-import routesAction from './routes'
+
 import prisma from './prisma'
 import { DefaultState, Context } from 'koa'
 import './types/index'
 import responseMiddleware from './middleware/responseMiddleware'
+import routesAction from './routes' //
 const PORT = process.env.PORT || 6677
 const app = new Koa()
 const router = new Router<DefaultState, Context>()
