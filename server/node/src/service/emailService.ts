@@ -2,7 +2,7 @@
 import { createTransport } from 'nodemailer'
 import { env } from 'process'
 import { EmailMessage } from '../types/index'
-
+import type { Context } from 'koa'
 class SendEmailService {
   private transporter = createTransport({
     host: 'smtp.qq.com', // QQ邮箱的SMTP服务器地址，默认即可
@@ -15,7 +15,7 @@ class SendEmailService {
     },
   })
 
-  async sendmail(EmailMessage: EmailMessage) {
+  async sendmail(ctx: Context, EmailMessage: EmailMessage) {
     this.transporter.sendMail(
       {
         ...EmailMessage,
@@ -28,10 +28,9 @@ class SendEmailService {
       (err, info) => {
         if (err) {
           console.log(err)
-          return false
+          ctx.fail({ msg: '邮件发送失败', data: err })
         } else {
-          console.log('Message sent: %s', info.messageId)
-          return info
+          ctx.success({ msg: '邮件发送成功', data: info })
         }
       }
     )
