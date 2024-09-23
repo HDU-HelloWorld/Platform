@@ -8,7 +8,7 @@ import {
   Message,
   Divider,
   Select,
-  InputNumber,
+  InputNumber
 } from '@arco-design/web-react'
 
 import useStores from '@/stores'
@@ -43,12 +43,12 @@ export default function Recruit() {
             required: (_, { label }) => `必须填写 ${label}`,
             string: {
               length: `字符数必须是 #{length}`,
-              match: `不匹配正则 #{pattern}`,
+              match: `不匹配正则 #{pattern}`
             },
             number: {
               min: `最小值为 #{min}`,
-              max: `最大值为 #{max}`,
-            },
+              max: `最大值为 #{max}`
+            }
           }}
           onValuesChange={(value) => {
             if (value['college']) {
@@ -70,12 +70,14 @@ export default function Recruit() {
                 Message.error(res?.msg)
               }
             })
-          }}>
+          }}
+        >
           <FormItem
             label="姓名"
             field="username"
             rules={[{ required: true }]}
-            tooltip={{ content: '请输入姓名', position: 'top' }}>
+            tooltip={{ content: '请输入姓名', position: 'top' }}
+          >
             <Input placeholder="请输入姓名" name="username" />
           </FormItem>
           <FormItem
@@ -85,10 +87,11 @@ export default function Recruit() {
               {
                 required: true,
                 match: /^\d{8}$/,
-                message: '请输入正确的学号（8位数字）',
-              },
+                message: '请输入正确的学号（8位数字）'
+              }
             ]}
-            tooltip={{ content: '请输入8位学号', position: 'top' }}>
+            tooltip={{ content: '请输入8位学号', position: 'top' }}
+          >
             <InputNumber
               hideControl
               placeholder="请输入学号"
@@ -96,7 +99,7 @@ export default function Recruit() {
               type="tel"
             />
           </FormItem>
-          <FormItem label="学院" field="college" required>
+          <FormItem label="学院" field="college" rules={[{ required: true }]}>
             <Select placeholder="选择你的学院">
               {Object.values(College).map((option, index) => (
                 <Option key={option} value={option}>
@@ -108,8 +111,9 @@ export default function Recruit() {
           <FormItem
             label="专业"
             field="major"
-            required
-            disabled={selectedCollege === undefined}>
+            rules={[{ required: true }]}
+            disabled={selectedCollege === undefined}
+          >
             <Select placeholder="选择你的专业 ">
               {collegeToMajors[selectedCollege as College]?.map(
                 (option, index) => (
@@ -120,10 +124,10 @@ export default function Recruit() {
               )}
             </Select>
           </FormItem>
-          <FormItem label="年级" field="grade" required>
+          <FormItem label="年级" field="grade" rules={[{ required: true }]}>
             <Input placeholder="请输入入学年份" type="tel" name="grade" />
           </FormItem>
-          <FormItem label="QQ号" field="qqId" required>
+          <FormItem label="QQ号" field="qqId" rules={[{ required: true }]}>
             <Input type="tel" placeholder="请输入QQ号" />
           </FormItem>
           <FormItem
@@ -133,16 +137,18 @@ export default function Recruit() {
               {
                 required: true,
                 match: regexList.tel,
-                message: '请输入中国大陆手机号（11位）',
-              },
-            ]}>
+                message: '请输入中国大陆手机号（11位）'
+              }
+            ]}
+          >
             <Input type="tel" placeholder="请输入手机号" name="phone" />
           </FormItem>
 
           <FormItem
             label="意愿部门"
             field="department"
-            rules={[{ required: true, message: '请选择意愿部门' }]}>
+            rules={[{ required: true, message: '请选择意愿部门' }]}
+          >
             <Select placeholder="意愿部门">
               {departments.map((option, index) => (
                 <Option key={option} value={option}>
@@ -151,7 +157,7 @@ export default function Recruit() {
               ))}
             </Select>
           </FormItem>
-          <FormItem label="个人简介" field="bio">
+          <FormItem label="个人简介" field="bio" rules={[{ required: true }]}>
             <Input.TextArea placeholder="简单介绍一下自己吧~~" name="bio" />
           </FormItem>
 
@@ -162,7 +168,8 @@ export default function Recruit() {
             <Button
               onClick={() => {
                 form.resetFields()
-              }}>
+              }}
+            >
               Reset
             </Button>
           </Space>

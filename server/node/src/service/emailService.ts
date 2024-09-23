@@ -2,8 +2,6 @@
 import { createTransport } from 'nodemailer'
 import { env } from 'process'
 import { EmailMessage } from '../types/index'
-let recievers = ['2553035342@qq.com', '1959759892@qq.com', '1405637455@qq.com']
-console.log(process.env.QQEMAIL_USER)
 
 class SendEmailService {
   private transporter = createTransport({
