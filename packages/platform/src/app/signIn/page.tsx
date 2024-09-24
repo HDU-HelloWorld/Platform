@@ -24,7 +24,7 @@ export default function SignIn() {
         })
     }
     if (studentId) {
-      signInApi.signIn('一面签到测试', studentId).then((res) => {
+      signInApi.signIn('一面签到', studentId).then((res) => {
         if (res.code === 200) {
           Message.success('签到成功')
           setStatus(true)

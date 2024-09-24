@@ -12,11 +12,11 @@ export type LuckyWheelWithPrizeList = LuckyWheel & {
   prizeList: Prize[]
 }
 export interface EmailMessage {
-  from: string
+  from?: string
   to: string | string[]
-  reciever: string
-  subject: string
-  text: string
+  reciever?: string
+  subject?: string
+  text?: string
   html?: string
   attachments?: any[]
 }

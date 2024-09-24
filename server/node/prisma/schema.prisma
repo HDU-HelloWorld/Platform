@@ -147,3 +147,12 @@ model SignIn{
   userIds    Int[]
   date      DateTime @default(now())
 }
+model sendEmail{
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  
+
+  isSended    Boolean  @default(false)
+  
+  date      DateTime @default(now())
+}
