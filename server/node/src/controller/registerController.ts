@@ -1,6 +1,6 @@
 import registerService from '../service/registerService'
 import type { Context } from 'koa'
-
+import bodyParser from 'koa-bodyparser'
 import { registerTable } from '@prisma/client'
 
 export const createRegisterTable = async (ctx: Context) => {

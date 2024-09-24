@@ -36,7 +36,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/app/luckyWheel/page.tsx",
-    "src/app/luckyWheel/page.tsx"
+    "src/app/luckyWheel/page.tsx",
+    "src/app/signIn/page.jsx"
   ],
   "exclude": [
     "node_modules"
