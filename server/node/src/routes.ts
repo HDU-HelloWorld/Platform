@@ -11,6 +11,11 @@ import {
   deleteLuckyWheel,
 } from './controller/luckyWheelController'
 import { sendEmail } from './controller/sendEmailController'
+import {
+  getSignInEvent,
+  createSignInEvent,
+  signIn,
+} from './controller/signInController'
 export default [
   { path: '/register', type: 'post', action: createRegisterTable },
   { path: '/register', type: 'get', action: getRegisterTableList },
@@ -21,6 +26,9 @@ export default [
   { path: '/luckyWheel', type: 'put', action: drawPrize },
   { path: '/luckyWheel', type: 'delete', action: deleteLuckyWheel },
   { path: '/email', type: 'post', action: sendEmail },
+  { path: '/signIn', type: 'get', action: getSignInEvent },
+  { path: '/signIn', type: 'post', action: createSignInEvent },
+  { path: '/signIn', type: 'put', action: signIn },
 ] as {
   path: string
   type: 'get' | 'post' | 'put' | 'delete'

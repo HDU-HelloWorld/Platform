@@ -190,7 +190,7 @@ const RecuritList = observer(() => {
           </>
         )
       },
-      filters: ['pending', 'rejected', 'approved'].map((item) => {
+      filters: ['pending', 'signed', 'rejected', 'approved'].map((item) => {
         return {
           text: item,
           value: item

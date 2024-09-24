@@ -4,7 +4,7 @@ export interface recuritTable {
   qqId: string
   phone: string
   bio: string
-  status: 'pending' | 'approved' | 'rejected'
+  status: 'pending' | 'signed' | 'approved' | 'rejected'
   department: 'WEB' | '后端' | 'AI' | '行政'
   college: string
   major: string

@@ -16,24 +16,26 @@ class SendEmailService {
   })
 
   async sendmail(ctx: Context, EmailMessage: EmailMessage) {
-    this.transporter.sendMail(
-      {
-        ...EmailMessage,
-        from: env.QQEMAIL_USER,
-        to: EmailMessage.to,
-        // subject: EmailMessage.subject || '测试邮件',
-        // text: EmailMessage.text || '这是一封测试邮件',
-        // html: EmailMessage.html || '<b style="color:red">这是一封测试邮件</b>',
-      },
-      (err, info) => {
-        if (err) {
-          console.log(err)
-          ctx.fail({ msg: '邮件发送失败', data: err })
-        } else {
-          ctx.success({ msg: '邮件发送成功', data: info })
+    return new Promise((resolve, reject) => {
+      this.transporter.sendMail(
+        {
+          ...EmailMessage,
+          from: env.QQEMAIL_USER,
+          to: EmailMessage.to,
+          // subject: EmailMessage.subject || '测试邮件',
+          // text: EmailMessage.text || '这是一封测试邮件',
+          // html: EmailMessage.html || '<b style="color:red">这是一封测试邮件</b>',
+        },
+        (err, info) => {
+          if (err) {
+            reject(err)
+          } else {
+            console.log(info)
+            resolve(info)
+          }
         }
-      }
-    )
+      )
+    })
   }
 }
 export default new SendEmailService()

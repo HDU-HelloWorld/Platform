@@ -141,3 +141,9 @@ model LuckyWheel {
   updatedAt DateTime @updatedAt
   prizeList Prize[]
 }
+model SignIn{
+  id        Int      @id @default(autoincrement())
+  event     String   @unique
+  userIds    Int[]
+  date      DateTime @default(now())
+}
