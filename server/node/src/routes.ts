@@ -10,7 +10,11 @@ import {
   drawPrize,
   deleteLuckyWheel,
 } from './controller/luckyWheelController'
-import { sendEmail, sendInterviewEmail } from './controller/sendEmailController'
+import {
+  sendEmail,
+  sendInterviewEmail,
+  getSendedEmail,
+} from './controller/sendEmailController'
 import {
   getSignInEvent,
   createSignInEvent,
@@ -26,6 +30,7 @@ export default [
   { path: '/luckyWheel', type: 'put', action: drawPrize },
   { path: '/luckyWheel', type: 'delete', action: deleteLuckyWheel },
   { path: '/email', type: 'post', action: sendInterviewEmail },
+  { path: '/email', type: 'get', action: getSendedEmail },
   { path: '/signIn', type: 'get', action: getSignInEvent },
   { path: '/signIn', type: 'post', action: createSignInEvent },
   { path: '/signIn', type: 'put', action: signIn },

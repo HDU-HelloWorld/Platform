@@ -59,10 +59,10 @@ class SendEmailService {
   }
   async getSendEmail(ctx: Context, email?: string) {
     if (email) {
-      return ctx.prisma.sendEmail.findUnique({ where: { email } })
+      return await ctx.prisma.sendEmail.findUnique({ where: { email } })
     }
 
-    return ctx.prisma.sendEmail.findMany()
+    return await ctx.prisma.sendEmail.findMany()
   }
   async updateSendEmail(ctx: Context, email: string, isSended: boolean) {
     return ctx.prisma.sendEmail.update({

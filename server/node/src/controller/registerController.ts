@@ -2,17 +2,27 @@ import registerService from '../service/registerService'
 import type { Context } from 'koa'
 import bodyParser from 'koa-bodyparser'
 import { registerTable } from '@prisma/client'
+import emailService from '../service/emailService'
 
 export const createRegisterTable = async (ctx: Context) => {
   const registerData = ctx.request.body as registerTable
   const table = await registerService.createRegisterTable(ctx, registerData)
-
+  await emailService.createEmail(ctx, registerData.qqId + '@qq.com')
   table
     ? ctx.success({ data: table })
     : ctx.fail({ code: -1, msg: '用户已注册', data: table })
 }
 export const getRegisterTableList = async (ctx: Context) => {
-  const tableList = await registerService.getRegisterTable(ctx)
+  const tableList = (await registerService.getRegisterTable(
+    ctx
+  )) as registerTable[]
+  // try {
+  //   for (const item of tableList) {
+  //     await emailService.createEmail(ctx, item.qqId + '@qq.com')
+  //   }
+  // } catch (error) {
+  //   console.log(error)
+  // }
   tableList
     ? ctx.success({ data: tableList })
     : ctx.fail({ code: -1, msg: '获取失败', data: tableList })

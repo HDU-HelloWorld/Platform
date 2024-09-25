@@ -14,8 +14,8 @@ import {
   Message
 } from '@arco-design/web-react'
 import { recuritTable } from '@/models/recurit.model'
-import { useEffect } from 'react'
-import { IconDown, IconRight } from '@arco-design/web-react/icon'
+import { useEffect, useRef } from 'react'
+import { IconDown, IconRight, IconSearch } from '@arco-design/web-react/icon'
 // function EditableCell(props: any) {
 //   const { children, className, rowData, column, onHandleSave } = props
 //   const ref = useRef(null)
@@ -96,10 +96,10 @@ import { IconDown, IconRight } from '@arco-design/web-react/icon'
 //     </div>
 //   )
 // }
-
+import type { RefInputType } from '@arco-design/web-react/es/Input'
 const RecuritList = observer(() => {
   const { recuritStore } = useStores()
-
+  const idInputRef = useRef<RefInputType>(null)
   const [deleteRow, setDeleteRow] = useState<recuritTable>()
   const {
     recruitList,
@@ -119,7 +119,41 @@ const RecuritList = observer(() => {
     },
     {
       title: 'Id',
-      dataIndex: 'id'
+      dataIndex: 'id',
+      filterIcon: <IconSearch />,
+      filterDropdown: ({
+        filterKeys,
+        setFilterKeys,
+        confirm
+      }: {
+        filterKeys?: string[]
+        setFilterKeys?: (filterKeys: string[], callback?: Function) => void
+        confirm?: Function
+      }) => {
+        return (
+          <div className="arco-table-custom-filter">
+            <Input.Search
+              ref={idInputRef}
+              searchButton
+              placeholder="Please enter name"
+              value={filterKeys?.[0] || ''}
+              onChange={(value) => {
+                setFilterKeys?.(value ? [value] : [])
+              }}
+              onSearch={() => {
+                confirm?.()
+              }}
+            />
+          </div>
+        )
+      },
+      onFilter: (value: string | undefined, row: recuritTable) =>
+        value ? row.id === parseInt(value) : true,
+      onFilterDropdownVisibleChange: (visible: any) => {
+        if (visible) {
+          setTimeout(() => idInputRef?.current?.focus(), 150)
+        }
+      }
     },
     {
       title: '意愿部门',
@@ -232,7 +266,6 @@ const RecuritList = observer(() => {
 
   return (
     <>
-      {' '}
       <section className="w-full">
         <Button style={{ marginBottom: 10 }} type="primary" onClick={addRow}>
           Add
