@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "node-xlsx": "^0.24.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.7.2"
+  }
+}

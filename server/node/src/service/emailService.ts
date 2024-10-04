@@ -28,11 +28,10 @@ class SendEmailService {
           // text: EmailMessage.text || '这是一封测试邮件',
           html:
             EmailMessage.html || '<b style="color:red">这是一封测试邮件</b>',
+          attachments: EmailMessage.attachments || [],
         },
         (err: any, info) => {
           if (err) {
-            console.log(EmailMessage.to)
-
             if (err.response && err.response.includes('550')) {
               console.log(`跳过无效的邮箱: ${EmailMessage.to} - ${err.message}`)
               resolve({ success: false, message: err.message }) // 可以选择返回一个表示失败的对象

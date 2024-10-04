@@ -17,9 +17,9 @@ export const getRegisterTableList = async (ctx: Context) => {
     ctx
   )) as registerTable[]
   // try {
-  //   for (const item of tableList) {
-  //     await emailService.createEmail(ctx, item.qqId + '@qq.com')
-  //   }
+  //   // for (const item of tableList) {
+  //   await emailService.createEmail(ctx,  '@qq.com')
+  //   // }
   // } catch (error) {
   //   console.log(error)
   // }
